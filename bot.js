@@ -26,7 +26,7 @@ const load = async () => {
         if (file.split(".").slice(-1)[0] !== "js") return;
         const evtName = file.split(".")[0];
         const event = require(`./events/${file}`);
-        bot.on(evtName, event.bind(null, bot));
+        bot.on(evtName, event.bind(bot));
         delete require.cache[require.resolve(`./events/${file}`)] 
     });
 };
