@@ -1,0 +1,15 @@
+{
+  "name": "undead",
+  "version": "1.0.0",
+  "description": "official bot",
+  "main": "bot.js",
+  "dependencies": {
+    "discord.js": "^11.3.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Twins",
+  "license": "ISC"
+}
