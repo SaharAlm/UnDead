@@ -2,6 +2,7 @@ const config = require('./config.json');
 const Discord = require('discord.js');
 const bot = new Discord.Client({ disableEveryone: true });
 const fs = require('fs');
+const mysql = require("mysql");
 const { promisify } = require("util");
 const readdir = promisify(fs.readdir);
 
@@ -10,19 +11,19 @@ bot.commands = new Discord.Collection();
 const load = async () => {
     const cmdFiles = await readdir("./commands/");
 
-    cmdFiles.forEach(file => {
-        try {
-            const f = require(`./commands/${file}`)
-            if (file.split(".").slice(-1)[0] !== "js") return;
-            // here it dont gonna work because if file dont end with js.
-            bot.commands.set(f.conf.name, f)
-        } catch (e) {
-            console.error(`error in command`, e.stack)
-        }
-    });
-
+cmdFiles.forEach(file => {
+     try {
+        const f = require(`./commands/${file}`)
+        if (file.split(".").slice(-1)[0] !== "js") return;
+        // here it dont gonna work because if file dont end with js.
+        bot.commands.set(f.conf.name, f)
+    } catch (e) {
+        console.error(`error in command`, e.stack)
+    }
+});
+    
     const evtFiles = await readdir("./events/");
-    evtFiles.forEach(file => {
+evtFiles.forEach(file => {
         if (file.split(".").slice(-1)[0] !== "js") return;
         const evtName = file.split(".")[0];
         const event = require(`./events/${file}`);
@@ -31,6 +32,16 @@ const load = async () => {
     });
 };
 
+var con = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "1234",
+    database: "sadb"
+});
+
+con.connect(err => {
+    console.log("Conected to database!");
+});
 
 
 
@@ -93,11 +104,11 @@ const load = async () => {
 
     // });
 
-    // bot.on('ready', async () => {
-    //     console.log('online motherfucker');
-    //     console.log(bot.commands);
-    //     bot.user.setActivity('UnDeadCraftOfficial | prefix "/"');
-    // });
+    bot.on('ready', async () => {
+        console.log('online motherfucker');
+        console.log(bot.commands);
+        bot.user.setActivity('UnDeadCraftOfficial | prefix "/"');
+    });
 
     bot.on('message', (message) => {
         if (message.author.bot) { return; }
