@@ -2,11 +2,11 @@ const config = require('./config.json');
 const Discord = require('discord.js');
 const bot = new Discord.Client({ disableEveryone: true });
 const fs = require('fs');
-const mysql = require("mysql");
 const { promisify } = require("util");
 const readdir = promisify(fs.readdir);
-
 bot.commands = new Discord.Collection();
+
+const coins = JSON.parse(fs.writeFileSync("./coins.json"));
 
 const load = async () => {
     const cmdFiles = await readdir("./commands/");
@@ -31,33 +31,6 @@ evtFiles.forEach(file => {
         delete require.cache[require.resolve(`./events/${file}`)] 
     });
 };
-
-var con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "1234",
-    database: "sadb"
-});
-
-con.connect(err => {
-    console.log("Conected to database!");
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -110,12 +83,14 @@ con.connect(err => {
         bot.user.setActivity('UnDeadCraftOfficial | prefix "/"');
     });
 
+
+
+
     bot.on('message', (message) => {
         if (message.author.bot) { return; }
         if (message.channel.type === 'dm') {
             return;
         }
-
 
         let prefix = config.prefix;
         let messageArray = message.content.split(' ');
@@ -125,7 +100,31 @@ con.connect(err => {
         let cmd = bot.commands.get(command.slice(prefix.length));
         if (cmd) cmd.run(bot, message, args);
 
+        if (!coins[message.author.id]) {
+            coins[message.author.id] = {
+                coins: 0
+            };
+        }
 
+        let coinAmt = Math.floor(Math.random() * 15) + 1;
+        let baseAmt = Math.floor(Math.random() * 15) + 1;
+        console.log(`${coinAmt} ; ${baseAmt}`);
+
+        if (coinAmt === baseAmt) {
+            coins[message.author.id] = {
+                coins: coins[message.author.id].coins + coinAmt
+            };
+            fs.writeFile("./coins.json", JSON.stringify(coins), (err) => {
+                if (err) console.log(err)
+            });
+            let coinEmbed = new Discord.RichEmbed()
+                .setAuthor(message.author.username)
+                .setColor("#0000FF")
+                .addField("💸", `${coinAmt} coins added!`);
+
+            message.channel.send(coinEmbed).then(msg => { msg.delete(360000) });
+        }
+        
         //hello
         if (cmd === `${prefix}hello`) {
             return message.channel.send('Hey!');

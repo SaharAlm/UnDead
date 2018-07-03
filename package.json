@@ -4,7 +4,8 @@
   "description": "official bot",
   "main": "bot.js",
   "dependencies": {
-    "discord.js": "^11.3.2"
+    "discord.js": "^11.3.2",
+    "node-json-db": "^0.7.5"
   },
   "devDependencies": {},
   "scripts": {

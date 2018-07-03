@@ -5,12 +5,12 @@ module.exports.run = async (bot, message, args) => {
     let embed = new Discord.RichEmbed()
     
     .setAuthor(message.author.username, message.author.avatarURL)
-    .setDescription("UnDeadCraft Official Bot!")
+    .setDescription("UnDead official Bot!")
     .setColor("#00ccff")
     .setThumbnail(message.author.avatarURL)
-    .addField("Joined At", message.guild.JoinedAt)
+    .addField("Joined At", message.guild.joinedAt)
     .addField("Created At", message.guild.createdAt)
-    .setFooter(message.guild.name)
+    .setFooter(message.guild.name, "Hope you have fun!")
     .setTimestamp()
 
 
