@@ -6,7 +6,7 @@ const { promisify } = require("util");
 const readdir = promisify(fs.readdir);
 bot.commands = new Discord.Collection();
 
-const coins = JSON.parse(fs.writeFileSync("./coins.json"));
+const coins = require("./coins.json");
 
 const load = async () => {
     const cmdFiles = await readdir("./commands/");
@@ -99,6 +99,8 @@ evtFiles.forEach(file => {
 
         let cmd = bot.commands.get(command.slice(prefix.length));
         if (cmd) cmd.run(bot, message, args);
+
+// +==============================================
 
         if (!coins[message.author.id]) {
             coins[message.author.id] = {
