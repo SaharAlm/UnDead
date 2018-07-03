@@ -77,10 +77,10 @@ evtFiles.forEach(file => {
 
     // });
 
-    bot.on('ready', async () => {
+    bot.on('ready', async (guild, member, memberCount) => {
         console.log('online motherfucker');
         console.log(bot.commands);
-        bot.user.setActivity('UnDeadCraftOfficial | prefix "/"');
+        bot.user.setActivity(`UnDeadOfficial | ${bot.guild.memberCount}`);
     });
 
 
