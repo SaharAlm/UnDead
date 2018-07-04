@@ -22,65 +22,54 @@ cmdFiles.forEach(file => {
     }
 });
     
-    const evtFiles = await readdir("./events/");
-evtFiles.forEach(file => {
-        if (file.split(".").slice(-1)[0] !== "js") return;
-        const evtName = file.split(".")[0];
-        const event = require(`./events/${file}`);
-        bot.on(evtName, event.bind(bot));
-        delete require.cache[require.resolve(`./events/${file}`)] 
-    });
+ 
 };
 
 
 
 
-    // bot.on("guildMemberAdd", (member, message) => {
-    //     let channel = member.guild.channels.find('name', "welcome-goodbye");
-    //     let memberavatar = member.user.iconURL
-    //     if (!channel) return;
-    //     let embed = new Discord.RichEmbed()
-    //         .setColor("RANDOM")
-    //         .setThumbnail(memberavatar)
-    //         .setTitle(":information_source: | information")
-    //         .addField(`:bust_in_silhouette: | Name`, member)
-    //         .addField(":microphone2: | Welocme to the server", member)
-    //         .addField(":id: | User:", `**[${member.id}]*`)
-    //         .addField("you are the member numer", `${member.guild.memberCount}`)
-    //         .addField("Name", `<@${member.id}>, true`)
-    //         .addField("Joined At", member.joinedAt)
-    //         .setFooter(`**${member.guild.name}**`)
-    //         .setTimestamp();
+    bot.on("guildMemberAdd", (member, message) => {
+        let channel = member.guild.channels.find('name', "welcome-bye");
+        let memberavatar = member.user.iconURL
+        if (!channel) return;
+        let embed = new Discord.RichEmbed()
+            .setColor("#02ef3d")
+            .setThumbnail(memberavatar)
+            .setTitle(":information_source: | Member Join!")
+            .addField(`:bust_in_silhouette: | Name`, member)
+            .addField(":microphone2: | Welocme to the server", member)
+            .addField("you are the member numer", `${member.guild.memberCount}`)
+            .addField("Joined At", member.joinedAt)
+            .setFooter(`**${member.guild.name}**`)
+            .setTimestamp();
 
-    //     channel.sendEmbed(embed)
+        channel.send(embed)
 
-    // });
+    });
 
-    // bot.on("guildMemberRemove", (member, message) => {
-    //     let channel = member.guild.channels.find('name', "welcome-goodbye");
-    //     let useravatar = member.user.iconURL
-    //     if (!channel) return;
-    //     let embed = new Discord.RichEmbed()
-    //         .setColor("RANDOM")
-    //         .setThumbnail(useravatar)
-    //         .setTitle(":information_source: | information")
-    //         .addField(":bust_in_silhouette: | Name", member)
-    //         .addField(":microphone2: | Has Left the server", member)
-    //         .addField(":id: | User:", `**[${member.id}]*`)
-    //         .addField("bye bye :sob: |", ' We will mis you')
-    //         .addField("This server now has", `${member.guild.memberCount} members`)
-    //         .addField("Name", `<@${member.id}>`, true)
-    //         .setFooter(`**${member.guild.name}**`)
-    //         .setTimestamp();
+    bot.on("guildMemberRemove", (member, message) => {
+        let channel = member.guild.channels.find('name', "welcome-bye");
+        let useravatar = member.user.iconURL
+        if (!channel) return;
+        let embed = new Discord.RichEmbed()
+            .setColor("#ff0800")
+            .setThumbnail(useravatar)
+            .setTitle(":information_source: | Member Leave!")
+            .addField(":bust_in_silhouette: | Name", member)
+            .addField(":microphone2: | Has Left the server", member)
+            .addField("bye bye :sob: |", ' We will mis you')
+            .addField("This server now has", `${member.guild.memberCount} members`)
+            .setFooter(`**${member.guild.name}**`)
+            .setTimestamp();
 
-    //     channel.sendEmbed(embed)
+        channel.send(embed)
 
-    // });
+    });
 
-    bot.on('ready', async (guild, member, memberCount) => {
+    bot.on('ready', async () => {
         console.log('online motherfucker');
         console.log(bot.commands);
-        bot.user.setActivity(`UnDeadOfficial | ${bot.guild.memberCount}`);
+        bot.user.setActivity(`UnDeadOfficial | prefix:"/"`);
     });
 
 
