@@ -11,6 +11,7 @@ const coins = require("./coins.json");
 const load = async () => {
     const cmdFiles = await readdir("./commands/");
 
+<<<<<<< HEAD
 cmdFiles.forEach(file => {
      try {
         const f = require(`./commands/${file}`)
@@ -24,6 +25,18 @@ cmdFiles.forEach(file => {
 });
     
  
+=======
+    cmdFiles.forEach(file => {
+        try {
+            const f = require(`./commands/${file}`)
+            if (file.split(".").slice(-1)[0] !== "js") return;
+            // here it dont gonna work because if file dont end with js.
+            bot.commands.set(f.conf.name, f)
+        } catch (e) {
+            console.error(`error in command`, e.stack)
+        }
+    });
+>>>>>>> bd3a85d44739f0eab3f0e5805deed86b72c19164
 };
 
 
@@ -126,6 +139,6 @@ cmdFiles.forEach(file => {
  
 
 
-bot.login(config.token);
+bot.login(process.env.BOT_TOKEN);
 
 load();
