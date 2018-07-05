@@ -11,7 +11,6 @@ const coins = require("./coins.json");
 const load = async () => {
     const cmdFiles = await readdir("./commands/");
 
-<<<<<<< HEAD
 cmdFiles.forEach(file => {
      try {
         const f = require(`./commands/${file}`)
@@ -25,7 +24,7 @@ cmdFiles.forEach(file => {
 });
     
  
-=======
+
     cmdFiles.forEach(file => {
         try {
             const f = require(`./commands/${file}`)
@@ -36,7 +35,6 @@ cmdFiles.forEach(file => {
             console.error(`error in command`, e.stack)
         }
     });
->>>>>>> bd3a85d44739f0eab3f0e5805deed86b72c19164
 };
 
 
