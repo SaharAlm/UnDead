@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const fs = require("fs");
 const ms = require("ms");
-let warns = require("./warnings.json");
+let warns = require("./warns.json");
 
 module.exports.run = async (bot, message, args) => {
 
