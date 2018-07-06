@@ -19,7 +19,7 @@ cmdFiles.forEach(file => {
         bot.commands.set(f.conf.name, f)
     } catch (e) {
         console.error(`error in command`, e.stack)
-        if (err) console.log(err);
+        if (err) throw err;
     }
 });
     
